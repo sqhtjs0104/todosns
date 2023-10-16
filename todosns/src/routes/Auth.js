@@ -46,7 +46,7 @@ const Auth = memo(() => {
         case "github": provider = new GithubAuthProvider(); break;
         default: break;
       }
-      const data = await signInWithPopup(authService, provider);
+      await signInWithPopup(authService, provider);
     } catch (error) {
       console.error(error);
     }
