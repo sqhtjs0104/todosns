@@ -1,22 +1,20 @@
-import React, { useState } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import React, { memo } from "react";
+import { Routes, Route, Redirect } from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
+import Navigation from "components/Navigation";
+import Profile from "routes/Profile";
 
-const AppRouter = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    return (
-        <Router>
-            <Routes>
-                {isLoggedIn ? (
-                    <Route path="/home" element={<Home/>} />
-                ) : (
-                    <Route path="/home" element={<Auth/>} />
-                )}
-            </Routes>
-        </Router>
-    );
-}
+const AppRouter = memo(({isLoggedIn}) => {
+  return (
+    <>
+      {isLoggedIn && <Navigation />}
+      <Routes>
+        <Route exact path="/" element={isLoggedIn ? <Home /> : <Auth />} />
+        <Route exact path="/profile" element={<Profile />} />
+      </Routes>
+    </>
+  );
+});
 
 export default AppRouter;
